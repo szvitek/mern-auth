@@ -6,6 +6,7 @@ import connectToDatabase from "./config/db";
 import { APP_ORIGIN, NODE_ENV, PORT } from "./config/env";
 import { OK } from "./constants/http";
 import errorHandler from "./middleware/errorHandler";
+import authRouter from "./routes/auth.route";
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.get("/", (_req, res) => {
     status: "healthy",
   });
 });
+
+app.use("/api/auth", authRouter);
 
 // 404 - not found
 app.use((_req, res, _next) => {
