@@ -2,8 +2,10 @@ import { z } from "zod";
 import asyncHandler from "../utils/asyncHandler";
 import { createAccount, loginUser } from "../services/auth.service";
 import { CREATED, OK } from "../constants/http";
-import { setAuthCookies } from "../utils/cookies";
+import { clearAuthCookies, setAuthCookies } from "../utils/cookies";
 import { loginSchema, registerSchema } from "./auth.validations";
+import { verifyToken } from "../utils/jwt";
+import SessionModel from "../models/session.model";
 
 export const registerHandler = asyncHandler(async (req, res) => {
   // validate req
@@ -31,5 +33,20 @@ export const loginHandler = asyncHandler(async (req, res) => {
 
   return setAuthCookies({ res, accessToken, refreshToken }).status(OK).json({
     message: "Login successful",
+  });
+});
+
+export const logoutHandler = asyncHandler(async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  const { payload, error } = verifyToken(accessToken);
+
+  if (payload) {
+    await SessionModel.findByIdAndDelete(payload.sessionId);
+  }
+
+  // todo: handle error case
+
+  return clearAuthCookies(res).status(OK).json({
+    message: "Logout successful",
   });
 });
