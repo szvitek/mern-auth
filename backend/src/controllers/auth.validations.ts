@@ -17,3 +17,6 @@ export const registerSchema = loginSchema
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+// quite weak validation but it's enough for now
+export const verificationCodeSchema = z.string().min(1).max(24);
