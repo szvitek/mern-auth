@@ -1,11 +1,9 @@
-import jwt from "jsonwebtoken";
-
 import VerificationCodeType from "../constants/verificationCodeTypes";
 import SessionModel from "../models/session.model";
 import UserModel from "../models/user.model";
 import VerificationCodeModel from "../models/verificationCode.model";
 import { ONE_DAY_MS, oneYearFromNow, thirtyDaysFromNow } from "../utils/date";
-import { JWT_REFRESH_SECRET, JWT_SECRET } from "../config/env";
+import { APP_ORIGIN } from "../config/env";
 import appAssert from "../utils/appAssert";
 import {
   CONFLICT,
@@ -19,6 +17,8 @@ import {
   signToken,
   verifyToken,
 } from "../utils/jwt";
+import { sendMail } from "../utils/sendMail";
+import { getVerifyEmailTemplate } from "../utils/emailTemplates";
 
 export type CreateAccountParams = {
   email: string;
@@ -46,7 +46,16 @@ export const createAccount = async (data: CreateAccountParams) => {
   });
 
   // send verification email
-  // TODO: send email logic
+  const url = `${APP_ORIGIN}/email/verify/${verificationCode._id}`;
+  const { error } = await sendMail({
+    to: user.email,
+    ...getVerifyEmailTemplate(url),
+  });
+
+  if (error) {
+    // todo: ignore errors for now, will handle them later
+    console.log(error);
+  }
 
   // create session
   const session = await SessionModel.create({
