@@ -20,3 +20,8 @@ export const registerSchema = loginSchema
 
 // quite weak validation but it's enough for now
 export const verificationCodeSchema = z.string().min(1).max(24);
+
+export const resetPasswordSchema = z.object({
+  password: passwordSchema,
+  verificationCode: verificationCodeSchema,
+});
