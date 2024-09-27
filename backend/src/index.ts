@@ -9,6 +9,7 @@ import errorHandler from "./middleware/errorHandler";
 import authRouter from "./routes/auth.route";
 import authenticate from "./middleware/authenicate";
 import userRouter from "./routes/user.route";
+import sessionRouter from "./routes/session.route";
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.get("/", (_req, res) => {
 app.use("/api/auth", authRouter);
 // protected routes
 app.use("/api/users", authenticate, userRouter);
+app.use("/api/sessions", authenticate, sessionRouter);
 
 // 404 - not found
 app.use((_req, res, _next) => {
