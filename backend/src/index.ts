@@ -7,6 +7,8 @@ import { APP_ORIGIN, NODE_ENV, PORT } from "./config/env";
 import { OK } from "./constants/http";
 import errorHandler from "./middleware/errorHandler";
 import authRouter from "./routes/auth.route";
+import authenticate from "./middleware/authenicate";
+import userRouter from "./routes/user.route";
 
 const app = express();
 
@@ -26,7 +28,10 @@ app.get("/", (_req, res) => {
   });
 });
 
+// auth routes
 app.use("/api/auth", authRouter);
+// protected routes
+app.use("/api/users", authenticate, userRouter);
 
 // 404 - not found
 app.use((_req, res, _next) => {
