@@ -1,23 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login } from "@/lib/api";
+import { register } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const {
-    mutate: signIn,
+    mutate: createAccount,
     isPending,
     isError,
+    error,
   } = useMutation({
-    mutationFn: login,
+    mutationFn: register,
     onSuccess: () => {
       navigate("/", { replace: true });
     },
@@ -25,7 +27,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn({ email, password });
+    createAccount({ email, password, confirmPassword });
   };
 
   return (
@@ -34,7 +36,7 @@ const LoginPage = () => {
         className="rounded-lg shadow-lg p-8 space-y-4"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-4xl">Sign into your account</h1>
+        <h1 className="text-4xl">Create an account</h1>
         <div>
           <Label htmlFor="email">Your email address</Label>
           <Input
@@ -58,21 +60,34 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <div>
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <p className="text-xs text-gray-400">
+            - Must be at least 8 characters long.
+          </p>
+        </div>
         {isError && (
-          <div className="text-red-500">Invalid email or password</div>
+          <div className="text-red-500">
+            {error?.message || "Invalid email or password"}
+          </div>
         )}
-        <Button
-          type="button"
-          variant="link"
-          className="block text-right px-0"
-          asChild
-        >
-          <Link to="/password/forgot">Forgot password?</Link>
-        </Button>
         <Button
           type="submit"
           className="w-full"
-          disabled={!email || password.length < 8 || isPending}
+          disabled={
+            !email ||
+            password.length < 8 ||
+            isPending ||
+            password !== confirmPassword
+          }
         >
           {isPending ? (
             <>
@@ -80,23 +95,23 @@ const LoginPage = () => {
               Please wait
             </>
           ) : (
-            "Sign in"
+            "Create Account"
           )}
         </Button>
         <p className="text-center text-xs text-gray-400">
-          {"Don't have an account? "}
+          {"Already have an account? "}
           <Button
             type="button"
-            variant="link"
             size="sm"
+            variant="link"
             className="p-0"
             asChild
           >
-            <Link to="/register">Sign up</Link>
+            <Link to="/login">Sign in</Link>
           </Button>
         </p>
       </form>
     </div>
   );
 };
-export default LoginPage;
+export default RegisterPage;
