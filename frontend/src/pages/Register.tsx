@@ -59,6 +59,9 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <p className="text-xs text-gray-400">
+            - Must be at least 8 characters long.
+          </p>
         </div>
         <div>
           <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -70,9 +73,6 @@ const RegisterPage = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <p className="text-xs text-gray-400">
-            - Must be at least 8 characters long.
-          </p>
         </div>
         {isError && (
           <div className="text-red-500">
@@ -107,7 +107,9 @@ const RegisterPage = () => {
             className="p-0"
             asChild
           >
-            <Link to="/login">Sign in</Link>
+            <Link className="text-blue-500" to="/login">
+              Sign in
+            </Link>
           </Button>
         </p>
       </form>

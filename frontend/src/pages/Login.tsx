@@ -65,9 +65,12 @@ const LoginPage = () => {
           type="button"
           variant="link"
           className="block text-right px-0"
+          size="sm"
           asChild
         >
-          <Link to="/password/forgot">Forgot password?</Link>
+          <Link className="text-blue-500" to="/password/forgot">
+            Forgot password?
+          </Link>
         </Button>
         <Button
           type="submit"
@@ -92,7 +95,9 @@ const LoginPage = () => {
             className="p-0"
             asChild
           >
-            <Link to="/register">Sign up</Link>
+            <Link className="text-blue-500" to="/register">
+              Sign up
+            </Link>
           </Button>
         </p>
       </form>
