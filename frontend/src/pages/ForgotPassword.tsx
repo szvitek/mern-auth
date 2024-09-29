@@ -32,11 +32,10 @@ const ForgotPasswordPage = () => {
         <div className="rounded-lg shadow-lg p-8 space-y-4">
           <Alert
             className="mx-auto w-fit flex flex-col items-center justify-center gap-2"
-            variant={isSuccess ? "success" : "destructive"}
+            variant="success"
           >
             <div className="flex items-center gap-2">
               <CircleCheck className="h-4 w-4" />
-
               <AlertTitle className="mb-0">Email sent!</AlertTitle>
             </div>
             <AlertDescription>
