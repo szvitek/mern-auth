@@ -1,9 +1,9 @@
+import AppLink from "@/components/custom/AppLink";
 import { Alert, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import { verifyEmail } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, CircleCheck, Loader2 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const VerifyEmailPage = () => {
   const { code } = useParams();
@@ -38,18 +38,10 @@ const VerifyEmailPage = () => {
             {isError && (
               <p>
                 The link is either invalid or expired{" "}
-                <Button variant="link" className="px-0" asChild>
-                  <Link className="text-blue-500" to="/password/forgot" replace>
-                    Get a new link
-                  </Link>
-                </Button>
+                <AppLink to="/password/forgot">Get a new link</AppLink>
               </p>
             )}
-            <Button variant="link" className="p-0" asChild>
-              <Link className="px-0 text-blue-500" to="/" replace>
-                Back to home
-              </Link>
-            </Button>
+            <AppLink to="/">Back to home</AppLink>
           </div>
         )}
       </div>

@@ -1,12 +1,13 @@
 import { FormEvent, useState } from "react";
 import { Alert, AlertTitle } from "../ui/alert";
-import { CircleCheck, Loader2 } from "lucide-react";
-import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { CircleCheck } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { resetPassword } from "@/lib/api";
+import H1 from "./H1";
+import SubmitButton from "./SubmitButton";
+import AppLink from "./AppLink";
 
 type ResetPasswordFormProps = {
   code: string;
@@ -32,70 +33,50 @@ export const ResetPasswordForm = ({ code }: ResetPasswordFormProps) => {
 
   return (
     <>
-      <h1 className="text-4xl">Change your password</h1>
-      {isSuccess ? (
-        <div className="rounded-lg shadow-lg p-8 space-y-4 text-center">
-          <Alert
-            className="mx-auto w-fit flex flex-col items-center justify-center gap-2"
-            variant="success"
-          >
-            <div className="flex items-center gap-2">
-              <CircleCheck className="h-4 w-4" />
-              <AlertTitle className="mb-0">
-                Password updated successfully!
-              </AlertTitle>
-            </div>
-          </Alert>
-          <Button
-            type="button"
-            size="sm"
-            variant="link"
-            className="p-0"
-            asChild
-          >
-            <Link className="text-blue-500" to="/login">
+      <H1>Change your password</H1>
+      <div className="rounded-lg shadow-lg p-8 space-y-4">
+        {isSuccess ? (
+          <>
+            <Alert
+              className="mx-auto w-fit flex flex-col items-center justify-center gap-2"
+              variant="success"
+            >
+              <div className="flex items-center gap-2">
+                <CircleCheck className="h-4 w-4" />
+                <AlertTitle className="mb-0">
+                  Password updated successfully!
+                </AlertTitle>
+              </div>
+            </Alert>
+            <AppLink to="/login" size="sm" className="block text-center">
               Sign in
-            </Link>
-          </Button>
-        </div>
-      ) : (
-        <form
-          className="rounded-lg shadow-lg p-8 space-y-4 w-full max-w-md"
-          onSubmit={handleSubmit}
-        >
-          <div>
-            <Label htmlFor="password">New Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoFocus
-            />
-          </div>
-          {isError && (
-            <div className="text-red-500">
-              {error?.message || "Invalid email or password"}
+            </AppLink>
+          </>
+        ) : (
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <Label htmlFor="password">New Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoFocus
+              />
             </div>
-          )}
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={password.length < 8 || isPending}
-          >
-            {isPending ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Please wait
-              </>
-            ) : (
-              "Reset password"
+            {isError && (
+              <div className="text-red-500 text-center">
+                {error?.message || "An error occured"}
+              </div>
             )}
-          </Button>
-        </form>
-      )}
+            <SubmitButton isPending={isPending} disabled={password.length < 8}>
+              Reset password
+            </SubmitButton>
+          </form>
+        )}
+      </div>
     </>
   );
 };
