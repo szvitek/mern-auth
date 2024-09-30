@@ -7,12 +7,14 @@ import { Label } from "@/components/ui/label";
 import { login } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const redirectUrl = location.state?.redirectUrl || "/";
 
   const {
     mutate: signIn,
@@ -21,7 +23,7 @@ const LoginPage = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      navigate("/", { replace: true });
+      navigate(redirectUrl, { replace: true });
     },
   });
 

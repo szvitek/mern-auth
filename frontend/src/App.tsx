@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
@@ -8,8 +8,13 @@ import AppContainer from "./components/custom/AppContainer";
 import HomePage from "./pages/Home";
 import ProfilePage from "./pages/Profile";
 import SettingsPage from "./pages/Settings";
+import { setNavigate } from "./lib/navigation";
 
 function App() {
+  // hack to use navigate in the axios intercepter
+  const navigate = useNavigate();
+  setNavigate(navigate);
+
   return (
     <Routes>
       <Route path="/" element={<AppContainer />}>
