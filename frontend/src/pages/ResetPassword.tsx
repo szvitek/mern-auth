@@ -1,16 +1,15 @@
+import AppAlert from "@/components/custom/AppAlert";
 import AppLink from "@/components/custom/AppLink";
 import ResetPasswordForm from "@/components/custom/ResetPasswordForm";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 
 const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
-  const exp = Number(searchParams.get("exp"));
-  const now = Date.now();
+  const code = searchParams.get("code") || "";
+  // const exp = Number(searchParams.get("exp"));
+  // const now = Date.now();
 
-  const linkIsValid = code && exp && exp > now;
+  const linkIsValid = true; //code && exp && exp > now;
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -19,19 +18,12 @@ const ResetPasswordPage = () => {
           <ResetPasswordForm code={code} />
         ) : (
           <div className="flex flex-col items-center space-y-4">
-            <Alert
-              className="mx-auto w-fit flex flex-col items-center justify-center gap-2"
+            <AppAlert
               variant="destructive"
+              description="The link is either invalid or expired."
             >
-              <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle className="mb-0">Invalid link</AlertTitle>
-              </div>
-              <AlertDescription>
-                The link is either invalid or expired.
-              </AlertDescription>
-            </Alert>
-
+              Invalid link
+            </AppAlert>
             <AppLink to="/password/forgot" size="sm">
               Request a new password reset link
             </AppLink>

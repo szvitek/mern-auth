@@ -1,4 +1,5 @@
 import AppLink from "@/components/custom/AppLink";
+import FormError from "@/components/custom/FormError";
 import H1 from "@/components/custom/H1";
 import SubmitButton from "@/components/custom/SubmitButton";
 import { Input } from "@/components/ui/input";
@@ -58,11 +59,7 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            {isError && (
-              <div className="text-red-500 text-center">
-                Invalid email or password
-              </div>
-            )}
+            {isError && <FormError>Invalid email or password</FormError>}
             <AppLink
               to="/password/forgot"
               className="block text-right"

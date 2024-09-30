@@ -1,4 +1,5 @@
 import AppLink from "@/components/custom/AppLink";
+import FormError from "@/components/custom/FormError";
 import H1 from "@/components/custom/H1";
 import SubmitButton from "@/components/custom/SubmitButton";
 import { Input } from "@/components/ui/input";
@@ -75,9 +76,9 @@ const RegisterPage = () => {
               />
             </div>
             {isError && (
-              <div className="text-red-500 text-center">
+              <FormError>
                 {error?.message || "Invalid email or password"}
-              </div>
+              </FormError>
             )}
             <SubmitButton
               isPending={isPending}

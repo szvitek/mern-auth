@@ -1,12 +1,12 @@
+import AppAlert from "@/components/custom/AppAlert";
 import AppLink from "@/components/custom/AppLink";
+import FormError from "@/components/custom/FormError";
 import H1 from "@/components/custom/H1";
 import SubmitButton from "@/components/custom/SubmitButton";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { sendPasswordResetEmail } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
-import { CircleCheck } from "lucide-react";
 import { FormEvent, useState } from "react";
 
 const ForgotPasswordPage = () => {
@@ -33,18 +33,9 @@ const ForgotPasswordPage = () => {
         <H1>Reset password</H1>
         {isSuccess ? (
           <div className="rounded-lg shadow-lg p-8 space-y-4">
-            <Alert
-              className="mx-auto w-fit flex flex-col items-center justify-center gap-2"
-              variant="success"
-            >
-              <div className="flex items-center gap-2">
-                <CircleCheck className="h-4 w-4" />
-                <AlertTitle className="mb-0">Email sent!</AlertTitle>
-              </div>
-              <AlertDescription>
-                Check your inbox for further instructions
-              </AlertDescription>
-            </Alert>
+            <AppAlert description="Check your inbox for further instructions">
+              Email sent!
+            </AppAlert>
           </div>
         ) : (
           <form
@@ -64,9 +55,9 @@ const ForgotPasswordPage = () => {
               />
             </div>
             {isError && (
-              <div className="text-red-500 text-center">
+              <FormError>
                 {error?.message || "Invalid email or password"}
-              </div>
+              </FormError>
             )}
             <SubmitButton isPending={isPending} disabled={!email}>
               Reset password
