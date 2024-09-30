@@ -7,6 +7,7 @@ import ResetPasswordPage from "./pages/ResetPassword";
 import AppContainer from "./components/custom/AppContainer";
 import HomePage from "./pages/Home";
 import ProfilePage from "./pages/Profile";
+import SettingsPage from "./pages/Settings";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/" element={<AppContainer />}>
         <Route index element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

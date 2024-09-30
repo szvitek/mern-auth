@@ -1,5 +1,5 @@
 import API from "@/config/apiClient";
-import { TUser } from "./types";
+import { TSession, TUser } from "./types";
 
 type LoginProps = {
   email: string;
@@ -30,3 +30,9 @@ export const resetPassword = async (data: ResetPasswordParams) =>
   API.post("/auth/password/reset", data);
 
 export const getUserMe = async (): Promise<TUser> => API.get("/users/me");
+
+export const getSessions = async (): Promise<TSession[]> =>
+  API.get("/sessions");
+
+export const deleteSession = async (id: string) =>
+  API.delete(`/sessions/${id}`);

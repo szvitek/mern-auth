@@ -4,3 +4,10 @@ export type TUser = {
   verified: boolean;
   createdAt: Date;
 };
+
+export type TSession = {
+  _id: string;
+  userAgent: string;
+  createdAt: Date;
+  isCurrent?: boolean;
+};

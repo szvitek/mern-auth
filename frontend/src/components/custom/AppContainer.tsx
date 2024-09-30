@@ -9,7 +9,7 @@ const AppContainer = () => {
   if (isLoading) {
     return (
       <div className="w-full h-[90vh] flex flex-col items-center justify-center">
-        <Loader2 className="animate-spin mb-4" />
+        <Loader2 className="animate-spin" />
       </div>
     );
   }
