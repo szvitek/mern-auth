@@ -1,4 +1,5 @@
 import API from "@/config/apiClient";
+import { TUser } from "./types";
 
 type LoginProps = {
   email: string;
@@ -28,4 +29,4 @@ type ResetPasswordParams = {
 export const resetPassword = async (data: ResetPasswordParams) =>
   API.post("/auth/password/reset", data);
 
-export const getUserMe = async () => API.get("/users/me");
+export const getUserMe = async (): Promise<TUser> => API.get("/users/me");

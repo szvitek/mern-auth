@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle, CircleCheck } from "lucide-react";
 
-type Variants = "success" | "destructive";
+type Variants = "success" | "destructive" | "warning";
 
 type AppAlertProps = {
   variant?: Variants;
@@ -10,7 +10,7 @@ type AppAlertProps = {
 };
 
 const renderVariant = (variant: Variants) => {
-  if (variant === "destructive") {
+  if (["destructive", "warning"].includes(variant)) {
     return <AlertCircle className="h-4 w-4" />;
   }
 

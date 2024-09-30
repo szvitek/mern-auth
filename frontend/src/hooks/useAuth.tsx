@@ -1,10 +1,11 @@
 import { getUserMe } from "@/lib/api";
-import { QueryOptions, useQuery } from "@tanstack/react-query";
+import { TUser } from "@/lib/types";
+import { QueryOptions, useQuery, UseQueryResult } from "@tanstack/react-query";
 
 const AUTH_KEY = "auth";
 
 const useAuth = (opts: QueryOptions = {}) => {
-  const { data: user, ...rest } = useQuery({
+  const { data: user, ...rest }: UseQueryResult<TUser> = useQuery({
     queryKey: [AUTH_KEY],
     queryFn: getUserMe,
     staleTime: Infinity,

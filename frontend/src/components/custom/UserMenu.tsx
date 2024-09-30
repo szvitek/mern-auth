@@ -11,11 +11,10 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/lib/api";
 import queryClient from "@/config/queryClient";
+import { TUser } from "@/lib/types";
 
-// todo: fix type
 type UserMenuProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  user: any;
+  user: TUser;
 };
 
 const UserMenu = ({ user }: UserMenuProps) => {
@@ -34,8 +33,8 @@ const UserMenu = ({ user }: UserMenuProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger className="ml-auto">
           <Avatar>
-            <AvatarImage src={user?.avatar} />
-            <AvatarFallback>{user?.email[0].toUpperCase()}</AvatarFallback>
+            <AvatarImage src={""} />
+            <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
