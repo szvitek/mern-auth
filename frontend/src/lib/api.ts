@@ -10,6 +10,7 @@ type RegisterProps = LoginProps & {
 };
 
 export const login = async (data: LoginProps) => API.post("/auth/login", data);
+export const logout = async () => API.get("/auth/logout");
 export const register = async (data: RegisterProps) =>
   API.post("/auth/register", data);
 
@@ -26,3 +27,5 @@ type ResetPasswordParams = {
 
 export const resetPassword = async (data: ResetPasswordParams) =>
   API.post("/auth/password/reset", data);
+
+export const getUserMe = async () => API.get("/users/me");
